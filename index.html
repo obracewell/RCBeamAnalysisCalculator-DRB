@@ -242,11 +242,11 @@
             if (assumption == 1) {
                 compstlstrn = firstcompstlstrn;
                 fsp = fy;
-                output += `&#949<sub>s</sub>' = ${compstlstrn.toFixed(4)}\n`;
+                output += `&#949<sub>s</sub>' = ${compstlstrn.toFixed(6)}\n`;
             } else {
                 compstlstrn = ((c - dp) / c) * 0.003;
                 fsp = 29000000 * compstlstrn;
-                output += `&#949<sub>s</sub>' = ${compstlstrn.toFixed(4)}\n`;
+                output += `&#949<sub>s</sub>' = ${compstlstrn.toFixed(6)}\n`;
             }
 
             // Solve for strain in steel
