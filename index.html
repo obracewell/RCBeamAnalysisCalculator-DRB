@@ -105,13 +105,23 @@
     </div>
 
     <label for="Asp">Cross-sectional area of compression steel, A<sub>s</sub>' (in<sup>2</sup>): </label>
-    <input type="number" id="Asp"><br>
+    <input type="number" id="Asp" oninput="toggleCompressionBarInputs()"><br>
 
     <div style="margin-left: 30px;">
     <label for="numBarsC">OR </label>
-    <input type="number" id="numBarsC" placeholder="Number of bars">
+    <select id="numBarsC" onchange="toggleCompressionBarInput()">
+        <option value="">Select number of bars</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+    </select>
     <label for="barSizeC">#</label>
-    <select id="barSizeC">
+    <select id="barSizeC" onchange="toggleAspInput()">
         <option value="">Select bar size</option>
         <option value="3">3</option>
         <option value="4">4</option>
@@ -125,6 +135,7 @@
         <option value="14">14</option>
         <option value="18">18</option>
     </select>
+    <span> (limited to single row) </span>
     <br>
     </div>
     
@@ -310,9 +321,9 @@
                    // Find matching bar configuration from the table
                     const barConfigT = barTable.find(config => config.barSelection === barSelectionStrT && config.rows === rows);
                     // Check if beam width b is sufficient
-                    if (barConfigT && b < barConfig.bmin) {
+                    if (barConfigT && b < barConfigT.bmin) {
                         const outputDiv = document.getElementById('output');
-                        outputDiv.innerHTML = `<span class="error">Selected configuration ${barSelectionStrT} requires a minimum beam width of ${barConfig.bmin} in. Increase b or choose a different bar configuration.</span>`;
+                        outputDiv.innerHTML = `<span class="error">Selected tension configuration ${barSelectionStrT} requires a minimum beam width of ${barConfig.bmin} in. Increase b or choose a different bar configuration.</span>`;
                         return;
                      }
                 }
@@ -323,8 +334,20 @@
 
                 if (!isNaN(barSizeC) && barAreaTable[barSizeC] && !isNaN(numBarsC)) {
                     Asp = barAreaTable[barSizeC] * numBarsC;
-                }
-            }
+
+                    // Build bar selection string
+                    const barSelectionStrC = `${numBarsC}#${barSizeC} bars`;
+
+                    // Lookup config assuming 1 row for compression steel
+                    const barConfigC = barTable.find(config => config.barSelection === barSelectionStrC && config.rows === 1);
+
+                if (barConfigC && b < barConfigC.bmin) {
+                    const outputDiv = document.getElementById('output');
+                    outputDiv.innerHTML = `<span class="error">Selected compression configuration ${barSelectionStrC} requires a minimum beam width of ${barConfigC.bmin} in. Increase b or choose a different bar configuration.</span>`;
+            return;
+        }
+    }
+}
             
             // Validate inputs
             if (isNaN(fc) || isNaN(fy) || isNaN(As) || isNaN(Asp) || isNaN(d) || isNaN(dp) || isNaN(b)) {
@@ -688,6 +711,40 @@
                 rows.disabled = false;
             }
     toggleAsInput(); // Also update As input state
+    }
+    function toggleAspInput() {
+    const barSizeC = document.getElementById('barSizeC').value;
+    const numBarsC = document.getElementById('numBarsC').value;
+    const AspInput = document.getElementById('Asp');
+
+    // Disable Asp input if both bar inputs are filled
+    if (barSizeC && numBarsC) {
+        AspInput.disabled = true;
+        AspInput.placeholder = "Disabled (using bar selection)";
+        AspInput.value = ""; // Optional: clear manually entered value
+    } else {
+        AspInput.disabled = false;
+        AspInput.placeholder = "";
+    }
+}
+
+function toggleCompressionBarInputs() {
+    const AspInput = document.getElementById('Asp');
+    const barSizeC = document.getElementById('barSizeC');
+    const numBarsC = document.getElementById('numBarsC');
+
+    // Disable bar inputs if Asp is entered
+    if (AspInput.value.trim() !== "") {
+        barSizeC.disabled = true;
+        numBarsC.disabled = true;
+        barSizeC.value = "";
+        numBarsC.value = "";
+    } else {
+        barSizeC.disabled = false;
+        numBarsC.disabled = false;
+    }
+
+    toggleAspInput(); // Keep both in sync
     }
     </script>
 </body>
