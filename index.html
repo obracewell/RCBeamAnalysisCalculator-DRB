@@ -109,7 +109,7 @@
 
     <div style="margin-left: 30px;">
     <label for="numBarsC">OR </label>
-    <select id="numBarsC" onchange="toggleCompressionBarInput()">
+    <select id="numBarsC" onchange="toggleCompressionBarInputs()">
         <option value="">Select number of bars</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -333,7 +333,7 @@
                     }
                     if (barConfigT && b < barConfigT.bmin) {
                         const outputDiv = document.getElementById('output');
-                        outputDiv.innerHTML = `<span class="error">Selected tension configuration ${barSelectionStrT} requires a minimum beam width of ${barConfig.bmin} in. Increase b or choose a different bar configuration.</span>`;
+                        outputDiv.innerHTML = `<span class="error">Selected tension configuration ${barSelectionStrT} requires a minimum beam width of ${barConfigT.bmin} in. Increase b or choose a different bar configuration.</span>`;
                         return;
                      }
                 }
