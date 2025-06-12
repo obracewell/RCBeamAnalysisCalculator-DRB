@@ -26,8 +26,8 @@
             text-decoration: none;
         }
         .button-image {
-            height: 45px;
-            width: 45px;
+            height: 40px;
+            width: 40px;
             object-fit: contain;
             vertical-align: middle;
             border-radius: 8px;
@@ -197,7 +197,7 @@
    
     <div id="graph" style="width: 800px; height: 600px;"></div>
 
-    <div style="margin-top: 10px;">
+    <div id="graph-buttons" style="margin-top: 10px; display: none;">
         <button onclick="copyGraphAsImage()">Copy Graph</button>
         <button onclick="downloadGraphImage()">Download Graph</button>
     </div>
@@ -522,6 +522,8 @@
 
             // Plot the graph
             plotGraph(b, d, dp, c, a, fc, fy, As, Asp);
+
+            document.getElementById(graph-buttons").style.display = "block";
         }
 
         function plotGraph(b, d, dp, c, a, fc, fy, As, Asp) {
