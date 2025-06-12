@@ -823,7 +823,7 @@ function downloadGraphImage() {
     Plotly.toImage(graphDiv, { format: 'png' }).then(function(dataUrl) {
         const link = document.createElement('a');
         link.href = dataUrl;
-        link.download = 'SRBAnalysisGraph.png';
+        link.download = 'DRBAnalysisGraph.png';
         link.click();
     });
 }
