@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RC Beam Analysis Calculator - Doubly Reinforced Beam</title>
+    <title>RC Calculator - DRB Analysis</title>
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
     <style>
        .site-header {
@@ -184,7 +184,7 @@
     <input type="number" id="As" oninput="toggleBarInputs()"><br>
 
     <div style="margin-left: 30px;">
-    <label for="numBarsT">OR </label>
+    <label for="numBarsT"><strong>OR</strong> </label>
     <select id="numBarsT" onchange="toggleAsInput()">
         <option value="">Select number of bars</option>
         <option value="2">2</option>
@@ -225,7 +225,7 @@
     <input type="number" id="Asp" oninput="toggleCompressionBarInputs()"><br>
 
     <div style="margin-left: 30px;">
-    <label for="numBarsC">OR </label>
+    <label for="numBarsC"><strong>OR</strong> </label>
     <select id="numBarsC" onchange="toggleCompressionBarInputs()">
         <option value="">Select number of bars</option>
         <option value="2">2</option>
